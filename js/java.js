@@ -4,7 +4,7 @@ document.getElementById("registrationForm").addEventListener("submit", function(
   // Lógica de validação dos campos do formulário
   var name = document.getElementById("name").value;
   var lastName = document.getElementById("lastName").value;
-  var cpfCnpj = document.getElementById("cpfCnpj").value;
+  var cpf = document.getElementById("cpf").value;
   var email = document.getElementById("email").value;
   var password = document.getElementById("password").value;
   var confirmPassword = document.getElementById("confirmPassword").value;
@@ -20,8 +20,8 @@ document.getElementById("registrationForm").addEventListener("submit", function(
     errorMessages.push("O sobrenome deve ter pelo menos 5 letras.");
   }
 
-  if (!/^\d{11}$|^\d{14}$/.test(cpfCnpj)) {
-    errorMessages.push("O CPF/CNPJ deve conter 11 ou 14 números.");
+  if (!/^\d{11}$/.test(cpf)) {
+    errorMessages.push("O CPF deve conter 11 números.");
   }
 
   if (email.length < 5 || !email.includes("@")) {
@@ -35,19 +35,33 @@ document.getElementById("registrationForm").addEventListener("submit", function(
   if (password !== confirmPassword) {
     errorMessages.push("As senhas não correspondem.");
   }
-
+  
   if (errorMessages.length > 0) {
-    document.getElementById("msgError").innerHTML = errorMessages.join("<br>");
+    document.getElementById("msgError").innerHTML = errorMessages.join("<br>")
   } else {
     document.getElementById("msgError").innerHTML = ""; // Limpa a mensagem de erro
     document.getElementById("msgSuccess").innerHTML = "Cadastro realizado com sucesso!"; // Exibe mensagem de sucesso
     document.getElementById("registrationForm").reset(); // Reseta o formulário
-    
+    console.log("cadastro concluido")
+ 
     // Armazena os dados no localStorage
     localStorage.setItem('name', name);
     localStorage.setItem('lastName', lastName);
-    localStorage.setItem('cpfCnpj', cpfCnpj);
+    localStorage.setItem('cpf', cpf);
     localStorage.setItem('email', email);
     localStorage.setItem('cep', cep);
-  }
+ }
+   
+      window.location.replace("../index.html")
+ 
+
+   
+      
+      
+   
+    
+      
+ 
 });
+
+
