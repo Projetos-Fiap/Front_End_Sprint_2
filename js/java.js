@@ -1,19 +1,22 @@
 document.getElementById("registrationForm").addEventListener("submit", function(event) {
   event.preventDefault(); // Impede o envio do formulário padrão
 
-  // Lógica de validação dos campos do formulário
-  let name = document.getElementById("name").value;
-  let lastName = document.getElementById("lastName").value;
-  let cpf = document.getElementById("cpf").value;
-  let email = document.getElementById("email").value;
-  let password = document.getElementById("password").value;
-  let confirmPassword = document.getElementById("confirmPassword").value;
-  let cep = document.getElementById("cep").value;
+  let errorMessages = [];
+  let isValid = false;
 
-  var errorMessages = [];
+  while (!isValid) {
+    // Lógica de validação dos campos do formulário
+    let name = document.getElementById("name").value;
+    let lastName = document.getElementById("lastName").value;
+    let cpf = document.getElementById("cpf").value;
+    let email = document.getElementById("email").value;
+    let password = document.getElementById("password").value;
+    let confirmPassword = document.getElementById("confirmPassword").value;
+    let cep = document.getElementById("cep").value;
 
-  // Loop para verificar os erros no formulário
-  while (errorMessages.length === 0) {
+    errorMessages = [];
+
+    // Verificação dos campos do formulário
     if (name.length < 5) {
       errorMessages.push("O nome deve ter pelo menos 5 letras.");
     }
@@ -38,32 +41,36 @@ document.getElementById("registrationForm").addEventListener("submit", function(
       errorMessages.push("As senhas não correspondem.");
     }
 
-    // Verifica se há erros
+    // Verificação de erros
     if (errorMessages.length > 0) {
-      // Exibe mensagens de erro
+      // Exibir mensagens de erro
       document.getElementById("msgError").innerHTML = errorMessages.join("<br>");
-      return; // Sai da função caso haja erros
+      break; // Sai do loop se houver erros
+    } else {
+      isValid = true; // Define isValid como true para sair do loop
     }
   }
 
-  // Limpar mensagens de erro
-  document.getElementById("msgError").innerHTML = "";
-    
-  // Exibir mensagem de sucesso
-  document.getElementById("msgSuccess").innerHTML = "Cadastro realizado com sucesso!";
-    
-  // Reseta o formulário
-  document.getElementById("registrationForm").reset();
-    
-  // Armazena os dados no localStorage
-  localStorage.setItem('name', name);
-  localStorage.setItem('lastName', lastName);
-  localStorage.setItem('cpf', cpf);
-  localStorage.setItem('email', email);
-  localStorage.setItem('cep', cep);
-    
-  console.log("Cadastro concluído");
- 
-  // Redireciona para a página principal
-  window.location.replace("../index.html");
+  if (isValid) {
+    // Limpar mensagens de erro
+    document.getElementById("msgError").innerHTML = "";
+
+    // Exibir mensagem de sucesso
+    document.getElementById("msgSuccess").innerHTML = "Cadastro realizado com sucesso!";
+
+    // Reseta o formulário
+    document.getElementById("registrationForm").reset();
+
+    // Armazena os dados no localStorage
+    localStorage.setItem('name', name);
+    localStorage.setItem('lastName', lastName);
+    localStorage.setItem('cpf', cpf);
+    localStorage.setItem('email', email);
+    localStorage.setItem('cep', cep);
+
+    console.log("Cadastro concluído");
+
+    // Redireciona para a página principal
+    window.location.replace("../index.html");
+  }
 });
